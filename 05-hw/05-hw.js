@@ -73,13 +73,11 @@ function getAverage() {
 
 function countAverage(digits) {
     let splittedValue = digits.split(",");
-    let sum = 0;
-    for (let i = 0; i < splittedValue.length; i++) {
-        if (isNormalInteger(splittedValue[i])) {
-            sum = sum + parseInt(splittedValue[i].trim());
-        }
-    }
-    return (sum / parseInt(splittedValue.length)).toFixed(1);
+    let intArr = splittedValue.map(function(item) {
+        return parseInt(item, 10);
+    });
+    const sumNumbers = intArr.reduce((sum, current) => sum + current);
+    return +(sumNumbers / parseInt(intArr.length)).toFixed(2);
 }
 
 // Створіть функцію getMedian(...numbers) – яка рахує медіану всіх переданих в неї аргументів. НЕЦІЛІ ЧИСЛА ІГНОРУЮТЬСЯ
@@ -89,23 +87,16 @@ function getMedian() {
 }
 
 function median(digits) {
-    let numbers = digits.split(",");
-    let median = 0;
-    const numbersLength = numbers.length;
-    let numbersArray = [];
-    for (let i = 0; i < numbersLength; i++) {
-        if (isNormalInteger(numbers[i])) {
-            numbersArray.push(parseInt(numbers[i].trim()));
-        }
+    let splittedValues = digits.split(",");
+    let numbers = splittedValues.map(function(item) {
+        return parseInt(item, 10);
+    });
+    const sortNumbers = numbers.filter((number) => Number.isInteger(number)).sort((a, b) => a - b);
+    const number = numbers.length / 2;
+    if (numbers.length % 2 === 0) {
+        return (sortNumbers[number - 1] + sortNumbers[number]) / 2;
     }
-    numbersArray.sort();
-    let length = numbersArray.length;
-    if (length % 2 === 0) {
-        median = (numbersArray[length / 2 - 1] + numbersArray[length / 2]) / 2;
-    } else {
-        median = numbersArray[(length - 1) / 2];
-    }
-    return median;
+    return sortNumbers[Math.floor(number)];
 }
 
 // Створіть функцію filterEvenNumbers(...numbers) – яка фільтрує парні числа передані як аргументи функції
@@ -117,35 +108,25 @@ function getEvenNumbers() {
 
 function filterEvenNumbers(digits) {
     let splittedValues = digits.split(",");
-    let filterEvenNumbersArray = [];
-    for (let i = 0; i < splittedValues.length; i++) {
-        splittedValues[i] = splittedValues[i].trim();
-        if (splittedValues[i] % 2 === 0 || isNormalInteger(splittedValues[i])) {
-            continue;
-        } else {
-            filterEvenNumbersArray.push(splittedValues[i]);
-        }
-    }
-    return filterEvenNumbersArray;
+    let numbers = splittedValues.map(function(item) {
+        return parseInt(item, 10);
+    });
+   return numbers.filter(number => number % 2)
 }
 
 // Створіть функцію countPositiveNumbers(...numbers) – яка порахує кількість чисел більших 0
 // Приклад: countPositiveNumbers(1, -2, 3, -4, -5, 6) -> 3
 function countPositiveNumbers() {
     const digits = getStringFromUser("task6");
-    document.getElementById("showTask6").innerText = "Kількість чисел більших 0: " + createPositiveNumbersArray(digits).length;
+    document.getElementById("showTask6").innerText = "Kількість чисел більших 0: " + createPositiveNumbersArray(digits);
 }
 
 function createPositiveNumbersArray(digits) {
     let array = digits.split(",");
-    let positiveNumbersArray = [];
-    for (let i = 0; i < array.length; i++) {
-        array[i] = array[i].trim();
-        if (array[i] > 0) {
-            positiveNumbersArray.push(array[i]);
-        }
-    }
-    return positiveNumbersArray;
+    let numbers = array.map(function(item) {
+        return parseInt(item, 10);
+    });
+    return numbers.filter(number => number > 0).length;
 }
 
 // Створіть функцію getDividedByFive(...numbers) – яка відфільтрує усі елементи в масиві та залишить тільки ті, які діляться на ціло на 5
@@ -157,16 +138,10 @@ function getDividedByFive() {
 
 function filterDividedByFiveNumbers(digits) {
     let splittedValues = digits.split(",");
-    let filteredArray = [];
-    for (let i = 0; i < splittedValues.length; i++) {
-        splittedValues[i] = parseInt(splittedValues[i].trim());
-        if (splittedValues[i] % 5 === 0) {
-            filteredArray.push(splittedValues[i]);
-        } else {
-            continue;
-        }
-    }
-    return filteredArray;
+    let numbers = splittedValues.map(function(item) {
+        return parseInt(item, 10);
+    });
+    return numbers.filter(number => number % 5 === 0);
 }
 
 // Створіть функцію replaceBadWords(string) – яка 1) розіб'є фразу на слова, 2) замінить погані слова на зірочки (*). При вирішенні цього завдання необхідно розбити масив на слова за допомогою функції .split(" "), після чого масив необхідно буде склеїти .join(" ") Погані слова: shit та fuck. Передбачте можливість розширювати список цих слів у майбутньому.
