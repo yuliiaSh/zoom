@@ -35,6 +35,7 @@ function getPowNumber() {
     let s = pow.toString();
     if (s.includes("-")) {
         pow = parseInt(s.replace("-", ""));
+
     }
     for (let i = 0; i < pow - 1; i++) {
         result = result * digit;
