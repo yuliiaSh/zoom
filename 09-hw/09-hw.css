@@ -1,0 +1,6 @@
+.box-container{
+    width: 270px;
+    display: flex;
+    margin: 2px;
+    flex-wrap: wrap;
+}
