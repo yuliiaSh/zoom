@@ -16,7 +16,7 @@ function getPairs() {
     }
     let pairsArray = [];
     for (let i = 0; i < boys.length; i++) {
-        pairsArray.push(boys[i].concat(", ", girls[i]).split());
+        pairsArray.push([boys[i], girls[i]]);
     }
     return pairsArray;
 }
@@ -25,7 +25,7 @@ function getJoinedPairs() {
     const pairs = getPairs();
     let joinedPairArray = [];
     for (let i = 0; i < pairs.length; i++) {
-        joinedPairArray.push(pairs[i].toString().replace(", ", " i "));
+        joinedPairArray.push([pairs[i][0] + " і " + pairs[i][1], pairs[i]]);
     }
     return joinedPairArray;
 }
@@ -36,7 +36,7 @@ function getStudentsAndThemes() {
     const joinedPairs = getJoinedPairs();
     let studentsAndThemesArray = [];
     for (let i = 0; i < joinedPairs.length; i++) {
-        studentsAndThemesArray.push([joinedPairs[i].concat(", ", themes[i])]);
+        studentsAndThemesArray.push([joinedPairs[i][0], themes[i]]);
     }
     return studentsAndThemesArray;
 }
@@ -45,7 +45,7 @@ function getStudentsAndThemes() {
 function getMarks() {
     let marksArray = [];
     for (let i = 0; i < students.length; i++) {
-        marksArray.push([students[i].concat(", ", marks[i])]);
+        marksArray.push([students[i], marks[i]]);
     }
     return marksArray;
 }
@@ -53,12 +53,9 @@ function getMarks() {
 // Поставте кожній парі випадкову оцінку(від 1 до 5) за проєкт(тут функція буде нечистою,
 // але не повинна мутувати массив): [["Олександр і Олена", "Теорія автоматів", 5], [...], [...]]
 function getMarksForPair() {
-    let tasksAndThemes = getStudentsAndThemes();
-    let marksForPairArray = [];
-    for (let i = 0; i < tasksAndThemes.length; i++) {
-        marksForPairArray.push(tasksAndThemes[i].concat(marks[i]));
+    for (let i = 0; i < 3; i++) {
+      return getStudentsAndThemes().map((group) => [...group, marks[i]]);
     }
-    return marksForPairArray;
 }
 
 console.log(getPairs());
